@@ -260,6 +260,7 @@ public class Commands {
 			return 1;
 		}
 
+		//Old fortune calculator code
 		/*
 		 * int j = 2; int k = 35 - i * 5; if (i > 100) { j = (int)(j + Math.round(i -
 		 * 40.0D)); } if (i > 50) { k = 1; } else if (i > 25) { k = 2; } else if (i >

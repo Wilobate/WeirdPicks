@@ -945,7 +945,7 @@ public class Events implements Listener {
 									Vector v = new Vector(location.getX(), location.getBlockY(), location.getZ());
 									ApplicableRegionSet set = worldGuard.getRegionManager(loc.getWorld())
 											.getApplicableRegions(v);
-									if ((set.testState(localPlayer, DefaultFlag.OTHER_EXPLOSION))
+									if ((set.testState(localPlayer, DefaultFlag.BLOCK_BREAK))
 											&& (location.getBlock().getType() != Material.BEDROCK)
 											&& (location.getBlock().getType() != Material.AIR)) {
 										blocksBroken = blocksBroken + 1;
@@ -1519,6 +1519,7 @@ public class Events implements Listener {
 		}
 	}
 
+	//Storing the player placed block so the pickaxes can check if the player placed block
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent evt) {
 		Block block = evt.getBlockPlaced();
@@ -1532,6 +1533,8 @@ public class Events implements Listener {
 
 	public int blocksBroken = 1;
 
+	//LAxe searching up for more logs
+	//TODO Might make it search all directions so it will get the entire tree in some cases, maybe a config option if this is added
 	public void breakChain(World world, Player player, Block block, int i, int j, int k) {
 		world.getBlockAt(i, j, k).breakNaturally();
 		if (world.getBlockAt(i, j + 1, k).getType() == Material.LOG
@@ -1541,10 +1544,12 @@ public class Events implements Listener {
 		}
 	}
 
+	//Adds to the blocks mined count in EZBlocks plugin. The axe adds one less, but that is the correct amount it should add, trust
 	public void addBlockEZBlock(int blocksBroken, Player player, Block block, boolean isAxe) {
 		if (!isAxe) {
 			blocksBroken = blocksBroken - 1;
 		}
+		//Loops and adds 1 block to the EZBlocks count one by one
 		while (blocksBroken > 0) {
 			if (WeirdPicks.getInstance().EZBlocksHere) {
 				EZBlocks ezblocks = (EZBlocks) WeirdPicks.getInstance().getServer().getPluginManager()
