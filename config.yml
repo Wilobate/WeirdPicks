@@ -1,0 +1,74 @@
+# ---    WeirdPicks by Wilobate    --- #
+# ---  Default configuration file  --- #
+
+# Config Version (DO NOT CHANGE THIS. IF YOU DO, THE PLUGIN WILL DELETE THIS FILE AND CREATE A NEW ONE)
+configVersion: 2
+
+# Radius to Explode with Explosive Pickaxes. (Default = 3)
+Explosion-Radius: 3
+
+# Radius to search for higher ores on Bountiful Pickaxes. (Default = 3)
+Bounty-Radius: 3
+
+# Enable Explosive Pickaxe? (Default = true)
+ePickEnable: true
+
+# Explosive Pickaxe Name (Default = "Explosive Pickaxe")
+ePickName: "Explosive Pickaxe"
+
+# Explosive Pickaxe Lore (Default = "Handle with care!")
+ePickLoreSt: "Handle with Care!"
+
+# Enable Unbreakable? (Default = true)
+ePickUnbreakable: true
+
+# Enable Smelter's Pickaxe? (Default = true)
+sPickEnable: true
+
+# Smelter's Pickaxe Name (Default = "Smelter's Pickaxe")
+sPickName: "Smelter's Pickaxe"
+
+# Smelter's Pickaxe Lore (Default = "Hot to the touch!")
+sPickLoreSt: "Hot to the Touch!"
+
+# Enable Unbreakable? (Default = true)
+sPickUnbreakable: true
+
+# Enable Lumberjack's Axe? (Default = true)
+lAxeEnable: true
+
+# Lumberjack's Axe Name (Default = "Lumberjack's Axe")
+lAxeName: "Lumberjack's Axe"
+
+# Lumberjack's Axe Lore (Default = "Extra Sharp!")
+lAxeLoreSt: "Extra Sharp!"
+
+# Enable Unbreakable? (Default = true)
+lAxeUnbreakable: true
+
+# Enable Bountiful Pickaxe? (Default = true)
+bPickEnable: true
+
+# Bountiful Pickaxe Name (Default = "Bountiful Pickaxe")
+bPickName: "Bountiful Pickaxe"
+
+# Bountiful Pickaxe Lore (Default = "Such Bounty, much wow!")
+bPickLoreSt: "Such Bounty, much wow!"
+
+# Enable Unbreakable? (Default = true)
+bPickUnbreakable: true
+
+# Enable Explosive Bountiful Pickaxe? (Default = true)
+ebPickEnable: true
+
+# Explosive Bountiful Pickaxe Name (Default = "Explosive Bountiful Pickaxe")
+ebPickName: "Explosive Bountiful Pickaxe"
+
+# Explosive Bountiful Pickaxe Lore (Default = "Much Bounty, much pow!")
+ebPickLoreSt: "Such Bounty, much pow!"
+
+# Enable Unbreakable? (Default = true)
+ebPickUnbreakable: true
+
+# Run Update Checker? (Default = true)
+update-checker: true

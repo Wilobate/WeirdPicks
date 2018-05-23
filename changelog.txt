@@ -1,0 +1,28 @@
+v1.1.3 -
+- Fixed Redstone not dropping correctly in some cases
+- Fixed Bountiful pickaxe not acting as silk touch when it had been enchanted with silk touch
+- Fixed Bountiful pickaxe acting as silk touch pickaxe when it shouldn't be
+- Retuned fortune a little bit, it is a little less fortunate now
+
+v1.1.2 - 6/05/2018
+- Added support for EZBlocks
+- Fixed Explosive Bountiful pickaxes still breaking blocks outside of regions. 
+
+v1.1.1 - 4/05/2018
+- Fixed tools turning into untextured items for earlier version of Minecraft
+- Fixed error when breaking blocks with hand
+- Fixed Lumberjack Axe taking double durability.
+
+v1.1.0 - 3/05/2018
+- Changed auto-updater to my own code, so now it works, sorry bout that
+
+v1.0.2 - 3/05/2018
+- Added changelog.txt
+- Made console colourful
+- Added support for earlier server versions (Not thoroughly tested. Please let me know asap so i can add further support)
+
+v1.0.1 - 2/05/2018
+- Fixed link in auto updater
+
+v1.0.0 - 2/05/2018
+- Released :D
