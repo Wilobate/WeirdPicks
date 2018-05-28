@@ -94,12 +94,13 @@ public class Events implements Listener {
 			} else {
 				return;
 			}
-			if (PlayerPlaced.contains(evt.getBlock().getLocation())) {
+			if (PlayerPlaced.contains(evt.getBlock().getLocation()) && !WeirdPicks.getCommands().isLumberAxe(player, item)) {
 				PlayerPlaced.remove(evt.getBlock().getLocation());
 				return;
 			} else {
 				if ((WeirdPicks.getCommands().isLumberAxe(player, item)) && ((evt.getBlock().getType() == Material.LOG)
 						|| (evt.getBlock().getType() == Material.LOG_2))) {
+					addBlockEZBlock(1, player, block);
 					breakChain(evt.getBlock().getWorld(), player, block, evt.getBlock().getX(), evt.getBlock().getY(),
 							evt.getBlock().getZ());
 				}
@@ -445,7 +446,7 @@ public class Events implements Listener {
 								}
 							}
 						}
-						addBlockEZBlock(blocksBroken, player, block, false);
+						addBlockEZBlock(blocksBroken - 1, player, block);
 					} else {
 						player.getWorld().createExplosion(loc, WeirdPicks.getCommands().getRadius());
 					}
@@ -673,7 +674,7 @@ public class Events implements Listener {
 											locationB.getBlock().getLocation(), new ItemStack(Material.GOLD_ORE, j2));
 								} else {
 									locationB.getBlock().getWorld().dropItemNaturally(
-											locationB.getBlock().getLocation(), new ItemStack(Material.GOLD_INGOT, j2));
+											locationB.getBlock().getLocation(), new ItemStack(Material.GOLD_ORE, j2));
 								}
 							}
 						}
@@ -725,7 +726,7 @@ public class Events implements Listener {
 											locationB.getBlock().getLocation(), new ItemStack(Material.IRON_ORE, j2));
 								} else {
 									locationB.getBlock().getWorld().dropItemNaturally(
-											locationB.getBlock().getLocation(), new ItemStack(Material.IRON_INGOT, j2));
+											locationB.getBlock().getLocation(), new ItemStack(Material.IRON_ORE, j2));
 								}
 							}
 						}
@@ -1360,7 +1361,7 @@ public class Events implements Listener {
 												location.getBlock().getWorld().dropItemNaturally(
 														location.getBlock().getLocation(),
 														new ItemStack(Material.INK_SACK,
-																ThreadLocalRandom.current().nextInt(1, 4)));
+																ThreadLocalRandom.current().nextInt(1, 4), (short) 4));
 											}
 										}
 										if ((fRedstoneb) && (!fEmeraldb) && (!fDiamondb) && (!fGoldb) && (!fIronb)
@@ -1512,7 +1513,7 @@ public class Events implements Listener {
 								}
 							}
 						}
-						addBlockEZBlock(blocksBroken, player, block, false);
+						addBlockEZBlock(blocksBroken - 1, player, block);
 					}
 				}
 			}
@@ -1540,15 +1541,12 @@ public class Events implements Listener {
 		if (world.getBlockAt(i, j + 1, k).getType() == Material.LOG
 				|| world.getBlockAt(i, j + 1, k).getType() == Material.LOG_2) {
 			breakChain(world, player, block, i, j + 1, k);
-			addBlockEZBlock(blocksBroken, player, block, true);
+			addBlockEZBlock(blocksBroken, player, block);
 		}
 	}
 
 	//Adds to the blocks mined count in EZBlocks plugin. The axe adds one less, but that is the correct amount it should add, trust
-	public void addBlockEZBlock(int blocksBroken, Player player, Block block, boolean isAxe) {
-		if (!isAxe) {
-			blocksBroken = blocksBroken - 1;
-		}
+	public void addBlockEZBlock(int blocksBroken, Player player, Block block) {
 		//Loops and adds 1 block to the EZBlocks count one by one
 		while (blocksBroken > 0) {
 			if (WeirdPicks.getInstance().EZBlocksHere) {

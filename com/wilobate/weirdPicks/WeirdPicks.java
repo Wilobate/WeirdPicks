@@ -154,6 +154,7 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 	public int currentConfigVersion = 2;
 
 	public boolean EZBlocksHere = false;
+	public boolean MRLPHere = false;
 
 	public void onLoad() {
 		setInstance(this);
@@ -170,7 +171,7 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 		pm.registerEvents(this, this);
 
 		if (WeirdPicks.getCommands().isEZBlocks()) {
-			console.sendMessage(ChatColor.AQUA + "[WeirdPicks]" + ChatColor.BLUE + " EZBlocks has been found");
+			console.sendMessage(ChatColor.AQUA + "[WeirdPicks]" + ChatColor.BLUE + " EZBlocks has been found!");
 			EZBlocksHere = true;
 		}
 
