@@ -177,7 +177,7 @@ public class Events implements Listener {
 									Vector v = new Vector(location.getX(), location.getBlockY(), location.getZ());
 									ApplicableRegionSet set = worldGuard.getRegionManager(loc.getWorld())
 											.getApplicableRegions(v);
-									if ((set.testState(localPlayer, DefaultFlag.OTHER_EXPLOSION))
+									if ((set.testState(localPlayer, DefaultFlag.BLOCK_BREAK))
 											&& (location.getBlock().getType() != Material.BEDROCK)
 											&& (location.getBlock().getType() != Material.AIR)) {
 										blocksBroken = blocksBroken + 1;
