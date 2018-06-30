@@ -9,10 +9,13 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExpEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
@@ -31,6 +34,9 @@ import me.clip.ezblocks.EZBlocks;
 public class Events implements Listener {
 
 	private ArrayList<Object> PlayerPlaced = new ArrayList<Object>();
+	boolean xpPick = false;
+	int toDrop;
+	Location xpLoc;
 
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent evt) {
@@ -39,6 +45,12 @@ public class Events implements Listener {
 			evt.setCancelled(true);
 		}
 	}
+	
+	@EventHandler
+	public void onExplode(BlockExplodeEvent evt) {
+		System.out.println("Da ting go skkkrrrraaaaaaaaa");
+		
+	}
 
 	@SuppressWarnings("deprecation")
 	@EventHandler
@@ -46,7 +58,7 @@ public class Events implements Listener {
 		Player player = evt.getPlayer();
 		Block block = evt.getBlock();
 		ItemStack item;
-
+		
 		WorldGuardPlugin worldGuard = (WorldGuardPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
 		Location SMloc = block.getLocation();
 		double smX = SMloc.getBlockX();
@@ -68,7 +80,8 @@ public class Events implements Listener {
 				if (WeirdPicks.getCommands().isBPickaxe(player, item)
 						|| WeirdPicks.getCommands().isEBPickaxe(player, item)
 						|| WeirdPicks.getCommands().isEPickaxe(player, item)
-						|| WeirdPicks.getCommands().isSPickaxe(player, item)) {
+						|| WeirdPicks.getCommands().isSPickaxe(player, item)
+						|| WeirdPicks.getCommands().isXPPickaxe(player, item)) {
 					try {
 						if (!item.getItemMeta().isUnbreakable()) {
 							short durability = item.getDurability();
@@ -98,6 +111,10 @@ public class Events implements Listener {
 				PlayerPlaced.remove(evt.getBlock().getLocation());
 				return;
 			} else {
+				if (WeirdPicks.getCommands().isXPPickaxe(player, item)) {
+					xpLoc = evt.getBlock().getLocation();
+					xpPick = true;
+				}
 				if ((WeirdPicks.getCommands().isLumberAxe(player, item)) && ((evt.getBlock().getType() == Material.LOG)
 						|| (evt.getBlock().getType() == Material.LOG_2))) {
 					addBlockEZBlock(1, player, block);
@@ -162,7 +179,7 @@ public class Events implements Listener {
 					if (!WeirdPicks.getCommands().getNatural()) {
 						int radius = WeirdPicks.getCommands().getRadius() - 2;
 						int blocksBroken = 0;
-						player.getWorld().createExplosion(loc, 0.0F);
+						player.getWorld().createExplosion(loc, 1.0F);
 						double minX = X - radius;
 						double maxX = X + radius + 1.0D;
 						double minY = Y - radius;
@@ -1530,6 +1547,22 @@ public class Events implements Listener {
 		double z = (int) loc.getBlockZ();
 		Location locB = new Location(block.getWorld(), x, y, z);
 		PlayerPlaced.add(locB);
+	}
+	
+	@EventHandler
+	public void onBlockDropXP(BlockExpEvent evt) {
+		if(xpPick) {
+			int dropped = evt.getExpToDrop();
+			toDrop = dropped * (WeirdPicks.getInstance().xpMulti - 1);
+			if(toDrop > 0) {
+				dropXp();
+			}
+			xpPick = false;
+		}
+	}
+	
+	public void dropXp() {
+		((ExperienceOrb) xpLoc.getWorld().spawn(xpLoc, ExperienceOrb.class)).setExperience(toDrop);
 	}
 
 	public int blocksBroken = 1;

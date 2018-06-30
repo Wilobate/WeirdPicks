@@ -2,13 +2,28 @@
 # ---  Default configuration file  --- #
 
 # Config Version (DO NOT CHANGE THIS. IF YOU DO, THE PLUGIN WILL DELETE THIS FILE AND CREATE A NEW ONE)
-configVersion: 2
+configVersion: 3
 
 # Radius to Explode with Explosive Pickaxes. (Default = 3)
 Explosion-Radius: 3
 
 # Radius to search for higher ores on Bountiful Pickaxes. (Default = 3)
 Bounty-Radius: 3
+
+# Multiples the amounbt of XP dropped while mining by the number below. 1 is default drops. (Default = 2)
+xpMulti: 2
+
+# Enable Experience Pickaxe? (Default = true)
+XPPickEnable: true
+
+# Experience Pickaxe Name (Default = "Experience Pickaxe")
+XPPickName: "Experience Pickaxe"
+
+# Experience Pickaxe Lore (Default = "Experience Aquired!")
+XPPickLoreSt: "Experience Aquired!"
+
+# Enable Unbreakable? (Default = true)
+XPPickUnbreakable: true
 
 # Enable Explosive Pickaxe? (Default = true)
 ePickEnable: true

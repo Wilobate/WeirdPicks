@@ -12,17 +12,32 @@ public class Messages implements CommandExecutor {
 		if ((sender instanceof ConsoleCommandSender)) {
 			ConsoleCommandSender player = (ConsoleCommandSender) sender;
 			if ((args.length == 0) && (cmd.getName().equalsIgnoreCase("wpick"))) {
-				player.sendMessage(ChatColor.AQUA + "Command is /wpick give <player> <EPick|BPick|EBPick|SPick|LAxe>!");
+				player.sendMessage(ChatColor.AQUA + "Command is /wpick give <player> <XPPick|EPick|BPick|EBPick|SPick|LAxe>!");
 				return true;
 			}
 			if ((args.length == 1) && (cmd.getName().equalsIgnoreCase("wpick")) && (args[0].equalsIgnoreCase("help"))) {
-				player.sendMessage(ChatColor.AQUA + "Command is /wpick give <player> <EPick|BPick|EBPick|SPick|LAxe>!");
+				player.sendMessage(ChatColor.AQUA + "Command is /wpick give <player> <XPPick|EPick|BPick|EBPick|SPick|LAxe>!");
 				return true;
 			}
 			if ((args.length == 1) && (cmd.getName().equalsIgnoreCase("wpick"))
 					&& (args[0].equalsIgnoreCase("reload"))) {
 				WeirdPicks.getInstance().LoadConfigValues();
 				player.sendMessage(ChatColor.AQUA + "Config reloaded!");
+				return true;
+			}
+			if ((args.length == 3) && (cmd.getName().equalsIgnoreCase("wpick")) && (args[0].equalsIgnoreCase("give"))
+					&& (!args[1].isEmpty()) && (args[2].equalsIgnoreCase("xpPick"))) {
+				String a1 = args[1];
+				try {
+					Player target = sender.getServer().getPlayer(a1);
+					WeirdPicks.getCommands().doGiveXPPick(target);
+				} catch (Exception e) {
+					player.sendMessage(ChatColor.AQUA + "Player: " + ChatColor.DARK_BLUE + a1 + ChatColor.AQUA
+							+ " does not exist!");
+					return false;
+				}
+				player.sendMessage(ChatColor.AQUA + "You've summoned a mighty Pickaxe for " + ChatColor.DARK_BLUE + a1
+						+ ChatColor.AQUA + "!");
 				return true;
 			}
 			if ((args.length == 3) && (cmd.getName().equalsIgnoreCase("wpick")) && (args[0].equalsIgnoreCase("give"))
@@ -100,7 +115,7 @@ public class Messages implements CommandExecutor {
 						+ ChatColor.AQUA + "!");
 				return true;
 			}
-			player.sendMessage(ChatColor.AQUA + "Command is /wpick give <player> <EPick|BPick|EBPick|SPick|LAxe>!");
+			player.sendMessage(ChatColor.AQUA + "Command is /wpick give <player> <XPPick|EPick|BPick|EBPick|SPick|LAxe>!");
 			return false;
 		}
 		if ((sender instanceof Player)) {
@@ -108,19 +123,26 @@ public class Messages implements CommandExecutor {
 			if (player.hasPermission("wpick.epick")) {
 				if ((args.length == 0) && (cmd.getName().equalsIgnoreCase("wpick"))) {
 					player.sendMessage(
-							ChatColor.AQUA + "Command is /wpick give <player|self> <EPick|BPick|EBPick|SPick|LAxe>!");
+							ChatColor.AQUA + "Command is /wpick give <player|self> <XPPick|EPick|BPick|EBPick|SPick|LAxe>!");
 					return true;
 				}
 				if ((args.length == 1) && (cmd.getName().equalsIgnoreCase("wpick"))
 						&& (args[0].equalsIgnoreCase("help"))) {
 					player.sendMessage(
-							ChatColor.AQUA + "Command is /wpick give <player|self> <EPick|BPick|EBPick|SPick|LAxe>!");
+							ChatColor.AQUA + "Command is /wpick give <player|self> <XPPick|EPick|BPick|EBPick|SPick|LAxe>!");
 					return true;
 				}
 				if ((args.length == 1) && (cmd.getName().equalsIgnoreCase("wpick"))
 						&& (args[0].equalsIgnoreCase("reload"))) {
 					player.sendMessage(ChatColor.AQUA + "Config reloaded!");
 					WeirdPicks.getInstance().LoadConfigValues();
+					return true;
+				}
+				if ((args.length == 3) && (cmd.getName().equalsIgnoreCase("wpick"))
+						&& (args[0].equalsIgnoreCase("give")) && (args[1].equalsIgnoreCase("self"))
+						&& (args[2].equalsIgnoreCase("xpPick"))) {
+					player.sendMessage(ChatColor.AQUA + "You've summoned a mighty Pickaxe!");
+					WeirdPicks.getCommands().doGiveXPPick(player);
 					return true;
 				}
 				if ((args.length == 3) && (cmd.getName().equalsIgnoreCase("wpick"))
@@ -238,7 +260,7 @@ public class Messages implements CommandExecutor {
 							+ a1 + ChatColor.AQUA + "!");
 					return true;
 				}
-				player.sendMessage(ChatColor.AQUA + "Command is /wpick give <player> <EPick|BPick|EBPick|SPick|LAxe>!");
+				player.sendMessage(ChatColor.AQUA + "Command is /wpick give <player> <XPPick|EPick|BPick|EBPick|SPick|LAxe>!");
 				return false;
 			}
 			player.sendMessage(ChatColor.RED + "Sorry, you don't have permission to use this command!");

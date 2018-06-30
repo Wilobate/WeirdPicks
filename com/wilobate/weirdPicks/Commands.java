@@ -8,6 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Commands {
+	public void doGiveXPPick(Player p) {
+		p.getInventory().addItem(new ItemStack[] {WeirdPicks.getInstance().XPPick});
+		p.sendMessage(ChatColor.AQUA + "Added mighty Pickaxe!");
+	}
 	public void doGiveEPick(Player p) {
 		p.getInventory().addItem(new ItemStack[] { WeirdPicks.getInstance().ePick });
 		p.sendMessage(ChatColor.AQUA + "Added mighty Pickaxe!");
@@ -40,6 +44,17 @@ public class Commands {
 		return false;
 	}
 
+	public boolean isXPPickaxe(Player p, ItemStack item) {
+		if (!WeirdPicks.getInstance().XPPickEnabled) {
+			return false;
+		}
+		if ((item.getItemMeta().getLore() != null)
+				&& (item.getItemMeta().getLore().contains(WeirdPicks.getInstance().XPPickLoreSt))) {
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean isEPickaxe(Player p, ItemStack item) {
 		if (!WeirdPicks.getInstance().ePickEnabled) {
 			return false;
@@ -284,5 +299,9 @@ public class Commands {
 
 	public int getBRadius() {
 		return WeirdPicks.getInstance().radiusB;
+	}
+	
+	public int getXPMulti() {
+		return WeirdPicks.getInstance().xpMulti;
 	}
 }

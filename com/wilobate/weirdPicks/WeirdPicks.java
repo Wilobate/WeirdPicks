@@ -83,6 +83,19 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 				WeirdPicks.getInstance().sPickMeta.spigot().setUnbreakable(sPickUnbreakable);
 			}
 			WeirdPicks.getInstance().sPick.setItemMeta(WeirdPicks.getInstance().sPickMeta);
+			
+			WeirdPicks.getInstance().XPPickLore = new ArrayList();
+			WeirdPicks.getInstance().XPPick = new ItemStack(WeirdPicks.getInstance().PICKAXE_MATERIAL, 1);
+			WeirdPicks.getInstance().XPPickMeta = WeirdPicks.getInstance().XPPick.getItemMeta();
+			WeirdPicks.getInstance().XPPickMeta.setDisplayName(WeirdPicks.getInstance().XPPickName);
+			WeirdPicks.getInstance().XPPickLore.add(WeirdPicks.getInstance().XPPickLoreSt);
+			WeirdPicks.getInstance().XPPickMeta.setLore(WeirdPicks.getInstance().XPPickLore);
+			try {
+				WeirdPicks.getInstance().XPPickMeta.setUnbreakable(XPPickUnbreakable);
+			} catch (NoSuchMethodError e) {
+				WeirdPicks.getInstance().XPPickMeta.spigot().setUnbreakable(XPPickUnbreakable);
+			}
+			WeirdPicks.getInstance().XPPick.setItemMeta(WeirdPicks.getInstance().XPPickMeta);
 
 			WeirdPicks.getInstance().lAxeLore = new ArrayList();
 			WeirdPicks.getInstance().lAxe = new ItemStack(WeirdPicks.getInstance().AXE_MATERIAL, 1);
@@ -106,6 +119,7 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 	public Material PICKAXE_MATERIAL = Material.DIAMOND_PICKAXE;
 	public Material ORE_MATERIAL;
 	public Material AXE_MATERIAL = Material.DIAMOND_AXE;
+	
 	public ArrayList<String> ePickLore;
 	public ItemStack ePick;
 	public ItemMeta ePickMeta;
@@ -113,6 +127,7 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 	public String ePickLoreSt = "Handle with Care!";
 	public boolean ePickUnbreakable = false;
 	public boolean ePickEnabled = true;
+	
 	public ArrayList<String> sPickLore;
 	public ItemStack sPick;
 	public ItemMeta sPickMeta;
@@ -120,6 +135,7 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 	public String sPickLoreSt = "Hot to the Touch!";
 	public boolean sPickUnbreakable = false;
 	public boolean sPickEnabled = true;
+	
 	public ArrayList<String> lAxeLore;
 	public ItemStack lAxe;
 	public ItemMeta lAxeMeta;
@@ -127,6 +143,7 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 	public String lAxeLoreSt = "Extra Sharp!";
 	public boolean lAxeUnbreakable = false;
 	public boolean lAxeEnabled = true;
+	
 	public ArrayList<String> bPickLore;
 	public ItemStack bPick;
 	public ItemMeta bPickMeta;
@@ -134,6 +151,7 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 	public String bPickLoreSt = "Such Bounty, much wow!";
 	public boolean bPickUnbreakable = false;
 	public boolean bPickEnabled = true;
+	
 	public ArrayList<String> ebPickLore;
 	public ItemStack ebPick;
 	public ItemMeta ebPickMeta;
@@ -141,7 +159,17 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 	public String ebPickLoreSt = "Such Bounty, much pow!";
 	public boolean ebPickUnbreakable = false;
 	public boolean ebPickEnabled = true;
+	
+	public ArrayList<String> XPPickLore;
+	public ItemStack XPPick;
+	public ItemMeta XPPickMeta;
+	public String XPPickName = "Experience Pickaxe";
+	public String XPPickLoreSt = "Experience Aquired!";
+	public boolean XPPickUnbreakable = false;
+	public boolean XPPickEnabled = false;
+	
 	public boolean natural = false;
+	public int xpMulti;
 	public int radius;
 	public int radiusB;
 	public List<ItemStack> pickaxes;
@@ -151,7 +179,7 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 	public File configFile;
 	public WorldGuardPlugin wg = null;
 	public boolean canUpdate = true;
-	public int currentConfigVersion = 2;
+	public int currentConfigVersion = 3;
 
 	public boolean EZBlocksHere = false;
 	public boolean MRLPHere = false;
@@ -275,6 +303,19 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 			getInstance().sPickMeta.spigot().setUnbreakable(sPickUnbreakable);
 		}
 		getInstance().sPick.setItemMeta(getInstance().sPickMeta);
+		
+		getInstance().XPPickLore = new ArrayList();
+		getInstance().XPPick = new ItemStack(getInstance().PICKAXE_MATERIAL, 1);
+		getInstance().XPPickMeta = getInstance().XPPick.getItemMeta();
+		getInstance().XPPickMeta.setDisplayName(getInstance().XPPickName);
+		getInstance().XPPickLore.add(getInstance().XPPickLoreSt);
+		getInstance().XPPickMeta.setLore(getInstance().XPPickLore);
+		try {
+			getInstance().XPPickMeta.setUnbreakable(XPPickUnbreakable);
+		} catch (NoSuchMethodError e) {
+			getInstance().XPPickMeta.spigot().setUnbreakable(XPPickUnbreakable);
+		}
+		getInstance().XPPick.setItemMeta(getInstance().XPPickMeta);
 
 		getInstance().lAxeLore = new ArrayList();
 		getInstance().lAxe = new ItemStack(getInstance().AXE_MATERIAL, 1);
@@ -299,6 +340,7 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 		FileConfiguration config = YamlConfiguration.loadConfiguration(this.configFile);
 		this.radius = config.getInt("Explosion-Radius");
 		this.radiusB = config.getInt("Bounty-Radius");
+		this.xpMulti = config.getInt("xpMulti");
 	}
 
 	public void LoadPicks() {
@@ -308,6 +350,11 @@ public class WeirdPicks extends JavaPlugin implements Listener {
 		this.ePickEnabled = config.getBoolean("ePickEnable");
 		this.ePickUnbreakable = config.getBoolean("ePickUnbreakable");
 
+		this.XPPickName = config.getString("XPPickName");
+		this.XPPickLoreSt = config.getString("XPPickLoreSt");
+		this.XPPickEnabled = config.getBoolean("XPPickEnable");
+		this.XPPickUnbreakable = config.getBoolean("XPPickUnbreakable");
+		
 		this.ebPickName = config.getString("ebPickName");
 		this.ebPickLoreSt = config.getString("ebPickLoreSt");
 		this.ebPickEnabled = config.getBoolean("ebPickEnable");
